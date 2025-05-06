@@ -5,6 +5,8 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt
 from app.services.user_service import get_all_users, add_user, delete_user, update_user
+from app.gui.widgets.ui.button import Button , ButtonVariant, ButtonSize
+from app.gui.widgets.ui.input import Input ,InputSize,InputVariant
 
 
 class MainWindow(QMainWindow):
@@ -14,13 +16,13 @@ class MainWindow(QMainWindow):
         self.setFixedSize(700, 500)
 
         self.user_count_label = QLabel("Tổng số người dùng: 0")
-        self.refresh_button = QPushButton("Làm mới dữ liệu")
+        self.refresh_button =  Button("Thêm người dùng",size=ButtonSize.SM)
 
-        self.name_input = QLineEdit()
+        self.name_input = Input(size=InputSize.SM,variant=InputVariant.DEFAULT)
         self.name_input.setPlaceholderText("Tên")
-        self.email_input = QLineEdit()
+        self.email_input = Input(size=InputSize.SM,variant=InputVariant.DEFAULT)
         self.email_input.setPlaceholderText("Email")
-        self.add_button = QPushButton("Thêm người dùng")
+        self.add_button = Button("Thêm người dùng",size=ButtonSize.SM)
 
         form_layout = QHBoxLayout()
         form_layout.addWidget(self.name_input)
@@ -36,7 +38,7 @@ class MainWindow(QMainWindow):
         self.table.setColumnWidth(1, 150)
         self.table.setColumnWidth(2, 200)
         self.table.setColumnWidth(3, 250)
-
+        
         stats_layout = QHBoxLayout()
         stats_layout.addWidget(self.user_count_label)
         stats_layout.addStretch()
@@ -71,10 +73,10 @@ class MainWindow(QMainWindow):
             self.table.setItem(row, 1, QTableWidgetItem(user.name))
             self.table.setItem(row, 2, QTableWidgetItem(user.email))
 
-            delete_btn = QPushButton("Xoá")
+            delete_btn = Button("Xoá",size=ButtonSize.SM,variant=ButtonVariant.DESTRUCTIVE)
             delete_btn.clicked.connect(lambda _, uid=user.id: self.delete_user(uid))
 
-            edit_btn = QPushButton("Sửa")
+            edit_btn = Button("Sửa",size=ButtonSize.SM,variant=ButtonVariant.OUTLINE)
             edit_btn.clicked.connect(lambda _, uid=user.id, uname=user.name, uemail=user.email: self.show_edit_dialog(uid, uname, uemail))
 
             btn_layout = QHBoxLayout()
@@ -111,8 +113,8 @@ class MainWindow(QMainWindow):
         email_input = QLineEdit()
         email_input.setText(email)
 
-        save_button = QPushButton("Lưu")
-        cancel_button = QPushButton("Huỷ")
+        save_button = Button("Lưu",size=ButtonSize.SM,variant=ButtonVariant.DEFAULT)
+        cancel_button = Button("Huỷ",size=ButtonSize.SM,variant=ButtonVariant.OUTLINE)
 
         layout = QFormLayout()
         layout.addRow("Tên:", name_input)
