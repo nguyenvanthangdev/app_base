@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# VS Code settings
+.vscode/
+
+# PyInstaller
+*.spec
+build/
+dist/
+
+# macOS
+.DS_Store
+
+# Python cache
+*.log
+*.sqlite3
+
+# Env file (chứa mật khẩu, thông tin DB)
+.env
+
+# Migrations (nếu dùng Alembic)
+app/db/migrations/

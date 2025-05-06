@@ -1,0 +1,6 @@
+pyqt6
+sqlmodel
+psycopg2-binary
+python-dotenv
+# build
+pyinstaller --onefile --windowed app/main.py --add-data ".env;."
