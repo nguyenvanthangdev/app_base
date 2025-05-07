@@ -10,12 +10,19 @@ class InputVariant(Enum):
     OUTLINE = "outline"
     GHOST = "ghost"
     ERROR = "error"
+    SUCCESS = "success"
+    WARNING = "warning"
+    INFO = "info"
+    DARK = "dark"
 
 class InputSize(Enum):
     DEFAULT = "default"
     SM = "sm"
     XS = "xs"
     LG = "lg"
+    XXS = "xxs"  # Extra extra small
+    XXL = "xxl"  # Extra extra large
+    COMPACT = "compact"  # Very compact size
 
 class Input(QLineEdit):
     def __init__(self, parent=None, placeholder="", variant=InputVariant.DEFAULT, 
@@ -51,7 +58,7 @@ class Input(QLineEdit):
             }
         """
         
-        # Size styles - SMALLER SIZES
+        # Size styles
         size_styles = {
             InputSize.DEFAULT: """
                 QLineEdit {
@@ -76,6 +83,29 @@ class Input(QLineEdit):
                 QLineEdit {
                     padding: 8px 16px;
                     min-height: 40px;
+                }
+            """,
+            InputSize.XXS: """
+                QLineEdit {
+                    padding: 1px 6px;
+                    min-height: 18px;
+                    font-size: 11px;
+                    border-radius: 2px;
+                }
+            """,
+            InputSize.XXL: """
+                QLineEdit {
+                    padding: 12px 20px;
+                    min-height: 48px;
+                    font-size: 16px;
+                }
+            """,
+            InputSize.COMPACT: """
+                QLineEdit {
+                    padding: 1px 4px;
+                    min-height: 16px;
+                    font-size: 10px;
+                    border-radius: 2px;
                 }
             """
         }
@@ -149,6 +179,76 @@ class Input(QLineEdit):
                     color: #ef4444;
                     border-color: #ef4444;
                 }
+            """,
+            InputVariant.SUCCESS: """
+                QLineEdit {
+                    border: 1px solid #22c55e;
+                }
+                QLineEdit:hover {
+                    border-color: #16a34a;
+                }
+                QLineEdit:focus {
+                    border-color: #15803d;
+                    border-width: 1px;
+                }
+                QLineEdit:disabled {
+                    background-color: #dcfce7;
+                    color: #22c55e;
+                    border-color: #22c55e;
+                }
+            """,
+            InputVariant.WARNING: """
+                QLineEdit {
+                    border: 1px solid #f59e0b;
+                }
+                QLineEdit:hover {
+                    border-color: #d97706;
+                }
+                QLineEdit:focus {
+                    border-color: #b45309;
+                    border-width: 1px;
+                }
+                QLineEdit:disabled {
+                    background-color: #fef3c7;
+                    color: #f59e0b;
+                    border-color: #f59e0b;
+                }
+            """,
+            InputVariant.INFO: """
+                QLineEdit {
+                    border: 1px solid #3b82f6;
+                }
+                QLineEdit:hover {
+                    border-color: #2563eb;
+                }
+                QLineEdit:focus {
+                    border-color: #1d4ed8;
+                    border-width: 1px;
+                }
+                QLineEdit:disabled {
+                    background-color: #dbeafe;
+                    color: #3b82f6;
+                    border-color: #3b82f6;
+                }
+            """,
+            InputVariant.DARK: """
+                QLineEdit {
+                    border: 1px solid #1e293b;
+                    background-color: #0f172a;
+                    color: #f8fafc;
+                }
+                QLineEdit:hover {
+                    border-color: #334155;
+                }
+                QLineEdit:focus {
+                    border-color: #475569;
+                    border-width: 1px;
+                }
+                QLineEdit:disabled {
+                    background-color: #1e293b;
+                    color: #64748b;
+                    border-color: #1e293b;
+                }
             """
         }
         
@@ -157,11 +257,17 @@ class Input(QLineEdit):
         self.setStyleSheet(combined_style)
         
     def sizeHint(self):
-        if self.size == InputSize.XS:
+        if self.size == InputSize.XXS:
+            return QSize(120, 18)  # Extra extra small input
+        elif self.size == InputSize.XS:
             return QSize(150, 22)  # Extra small input
         elif self.size == InputSize.SM:
             return QSize(180, 26)  # Small input
         elif self.size == InputSize.LG:
             return QSize(240, 40)  # Large input
+        elif self.size == InputSize.XXL:
+            return QSize(280, 48)  # Extra extra large input
+        elif self.size == InputSize.COMPACT:
+            return QSize(100, 16)  # Compact input
         else:
             return QSize(200, 32)  # Default input

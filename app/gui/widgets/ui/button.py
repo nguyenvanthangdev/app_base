@@ -12,13 +12,21 @@ class ButtonVariant(Enum):
     SECONDARY = "secondary"
     GHOST = "ghost"
     LINK = "link"
+    SUCCESS = "success"
+    WARNING = "warning"
+    INFO = "info"
+    DARK = "dark"
+    LIGHT = "light"
 
 class ButtonSize(Enum):
     DEFAULT = "default"
     SM = "sm"
     LG = "lg"
     ICON = "icon"
-    
+    XXS = "xxs"  # Extra extra small
+    XXL = "xxl"  # Extra extra large
+    COMPACT = "compact"  # Very compact size
+    SQUARE = "square"  # Square button with equal width and height
 
 class Button(QPushButton):
     def __init__(self, text, parent=None, variant=ButtonVariant.DEFAULT, 
@@ -41,10 +49,8 @@ class Button(QPushButton):
         # Apply styling
         self.apply_styling()
     
-        
-        
     def apply_styling(self):
-        # Base styles with improved typography - REMOVED transition property
+        # Base styles with improved typography
         base_style = """
             QPushButton {
                 border-radius: 4px;
@@ -87,6 +93,37 @@ class Button(QPushButton):
                     font-size: 14px;
                     min-height: 40px;
                     min-width: 40px;
+                }
+            """,
+            ButtonSize.XXS: """
+                QPushButton {
+                    padding: 2px 8px;
+                    font-size: 10px;
+                    min-height: 20px;
+                    border-radius: 2px;
+                }
+            """,
+            ButtonSize.XXL: """
+                QPushButton {
+                    padding: 8px 20px;
+                    font-size: 16px;
+                    min-height: 44px;
+                }
+            """,
+            ButtonSize.COMPACT: """
+                QPushButton {
+                    padding: 1px 6px;
+                    font-size: 10px;
+                    min-height: 18px;
+                    border-radius: 2px;
+                }
+            """,
+            ButtonSize.SQUARE: """
+                QPushButton {
+                    padding: 8px;
+                    font-size: 12px;
+                    min-height: 32px;
+                    min-width: 32px;
                 }
             """
         }
@@ -195,6 +232,92 @@ class Button(QPushButton):
                 QPushButton:disabled {
                     color: #94a3b8;
                 }
+            """,
+            ButtonVariant.SUCCESS: """
+                QPushButton {
+                    background-color: #22c55e;
+                    color: #ffffff;
+                    border: none;
+                }
+                QPushButton:hover {
+                    background-color: #16a34a;
+                }
+                QPushButton:pressed {
+                    background-color: #15803d;
+                }
+                QPushButton:disabled {
+                    background-color: #dcfce7;
+                    color: #22c55e;
+                }
+            """,
+            ButtonVariant.WARNING: """
+                QPushButton {
+                    background-color: #f59e0b;
+                    color: #ffffff;
+                    border: none;
+                }
+                QPushButton:hover {
+                    background-color: #d97706;
+                }
+                QPushButton:pressed {
+                    background-color: #b45309;
+                }
+                QPushButton:disabled {
+                    background-color: #fef3c7;
+                    color: #f59e0b;
+                }
+            """,
+            ButtonVariant.INFO: """
+                QPushButton {
+                    background-color: #3b82f6;
+                    color: #ffffff;
+                    border: none;
+                }
+                QPushButton:hover {
+                    background-color: #2563eb;
+                }
+                QPushButton:pressed {
+                    background-color: #1d4ed8;
+                }
+                QPushButton:disabled {
+                    background-color: #dbeafe;
+                    color: #3b82f6;
+                }
+            """,
+            ButtonVariant.DARK: """
+                QPushButton {
+                    background-color: #0f172a;
+                    color: #ffffff;
+                    border: none;
+                }
+                QPushButton:hover {
+                    background-color: #1e293b;
+                }
+                QPushButton:pressed {
+                    background-color: #334155;
+                }
+                QPushButton:disabled {
+                    background-color: #1e293b;
+                    color: #64748b;
+                }
+            """,
+            ButtonVariant.LIGHT: """
+                QPushButton {
+                    background-color: #f8fafc;
+                    color: #0f172a;
+                    border: 1px solid #e2e8f0;
+                }
+                QPushButton:hover {
+                    background-color: #f1f5f9;
+                }
+                QPushButton:pressed {
+                    background-color: #e2e8f0;
+                }
+                QPushButton:disabled {
+                    background-color: #f8fafc;
+                    color: #94a3b8;
+                    border-color: #e2e8f0;
+                }
             """
         }
         
@@ -205,6 +328,14 @@ class Button(QPushButton):
     def sizeHint(self):
         if self.size == ButtonSize.ICON:
             return QSize(40, 40)
+        elif self.size == ButtonSize.XXS:
+            return QSize(60, 20)
+        elif self.size == ButtonSize.XXL:
+            return QSize(200, 44)
+        elif self.size == ButtonSize.COMPACT:
+            return QSize(50, 18)
+        elif self.size == ButtonSize.SQUARE:
+            return QSize(32, 32)
         return super().sizeHint()
 
 
